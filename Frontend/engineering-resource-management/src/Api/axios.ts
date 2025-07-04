@@ -47,27 +47,19 @@
 
 
 
-
 // src/api/axios.ts
 import axios from "axios";
 
-const backends = [
-  {
-    url: "http://localhost:8081/",
-    isActive: true // Will be checked at runtime
-  },
-  {
-    url: "https://engineering-resource-management-system-oiua.onrender.com/",
-    isActive: true
-  }
-];
+const LOCAL_BACKEND = "http://localhost:8081/";
+const RENDER_BACKEND = "https://engineering-resource-management-system-oiua.onrender.com/";
 
 const api = axios.create({
-  baseURL: `${backends[0].url}api/`,
-  withCredentials: true // Important for cookies/sessions
+  baseURL: `${LOCAL_BACKEND}api/`, // Default to local
+  timeout: 5000, // 5s timeout
+  withCredentials: true, // For cookies/sessions
 });
 
-// Health check function
+// Health check endpoint (must match your backend)
 const checkBackendHealth = async (url: string) => {
   try {
     await axios.get(`${url}api/health-check`, { timeout: 2000 });
@@ -77,66 +69,28 @@ const checkBackendHealth = async (url: string) => {
   }
 };
 
-// Active backend index
-let activeBackendIndex = 0;
-
-// Request interceptor for token
-api.interceptors.request.use((config) => {
-  const authState = localStorage.getItem('authState');
-  const token = authState ? JSON.parse(authState).token : null;
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
-
-// Response interceptor with improved error handling
+// Fallback to Render if local fails
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    
-    // Handle 401 unauthorized
-    if (error.response?.status === 401) {
-      localStorage.removeItem('authState');
-      window.location.href = '/login';
+
+    // Skip if already retried or not a network error
+    if (originalRequest._retry || !["ERR_NETWORK", "ECONNREFUSED"].includes(error.code)) {
       return Promise.reject(error);
     }
 
-    // Try fallback if connection failed
-    if (error.code === 'ERR_NETWORK' || error.code === 'ECONNREFUSED') {
-      // Find next active backend
-      for (let i = 0; i < backends.length; i++) {
-        if (i !== activeBackendIndex && backends[i].isActive) {
-          const isHealthy = await checkBackendHealth(backends[i].url);
-          if (isHealthy) {
-            activeBackendIndex = i;
-            api.defaults.baseURL = `${backends[i].url}api/`;
-            originalRequest.baseURL = api.defaults.baseURL;
-            return api(originalRequest);
-          }
-        }
-      }
+    console.log("Local backend failed, trying Render fallback...");
+    originalRequest._retry = true;
+
+    // Switch to Render backend if healthy
+    if (await checkBackendHealth(RENDER_BACKEND)) {
+      api.defaults.baseURL = `${RENDER_BACKEND}api/`;
+      return api(originalRequest);
     }
 
     return Promise.reject(error);
   }
 );
-
-// Initial health check
-(async () => {
-  if (!await checkBackendHealth(backends[activeBackendIndex].url)) {
-    for (let i = 0; i < backends.length; i++) {
-      if (i !== activeBackendIndex) {
-        const isHealthy = await checkBackendHealth(backends[i].url);
-        if (isHealthy) {
-          activeBackendIndex = i;
-          api.defaults.baseURL = `${backends[i].url}api/`;
-          break;
-        }
-      }
-    }
-  }
-})();
 
 export default api;
