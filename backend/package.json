@@ -1,0 +1,38 @@
+{
+	"name": "backend",
+	"version": "1.0.0",
+	"description": "backend",
+	"main": "server.js",
+	"scripts": {
+		"start": "node server.js",
+		"dev": "nodemon server.js",
+		"seed": "node seed.js",
+		"seed:dev": "NODE_ENV=development node seed.js"
+	},
+	"author": "Zubair Wani",
+	"license": "ISC",
+	"dependencies": {
+		"axios": "^1.7.8",
+		"bcryptjs": "^3.0.2",
+		"body-parser": "^1.20.3",
+		"cors": "^2.8.5",
+		"crypto": "^1.0.1",
+		"dotenv": "^16.6.1",
+		"ejs": "^3.1.10",
+		"express": "^4.21.1",
+		"fcm-node": "^1.6.1",
+		"firebase-admin": "^13.0.1",
+		"helmet": "^8.0.0",
+		"http": "^0.0.1-security",
+		"jsonwebtoken": "^9.0.2",
+		"mongodb": "^6.11.0",
+		"mongoose": "^8.8.3",
+		"morgan": "^1.10.0",
+		"multer": "^1.4.5-lts.1",
+		"nodemon": "^3.1.7",
+		"socket.io": "^4.8.1",
+		"socket.io-client": "^4.8.1",
+		"swagger-autogen": "^2.23.7",
+		"swagger-ui-express": "^5.0.1"
+	}
+}

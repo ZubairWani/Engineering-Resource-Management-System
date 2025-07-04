@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    // Sets the base directory for resolving non-absolute module names.
+    "baseUrl": ".",
+    // Defines the path aliases. Maps '@/*' to 'src/*'.
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
+}
