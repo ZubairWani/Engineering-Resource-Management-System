@@ -1,59 +1,4 @@
-// // As defined in the project description
-// export interface User {
-//   _id: string;
-//   email: string;
-//   name: string;
-//   role: 'engineer' | 'manager';
-//   skills: string[];
-//   seniority: 'junior' | 'mid' | 'senior';
-//   maxCapacity: 50 | 100; // 50 for part-time, 100 for full-time
-//   department?: string;
-// }
-
-// export interface Project {
-//   _id: string;
-//   name: string;
-//   description: string;
-//   startDate: string; 
-//   endDate: string;
-//   requiredSkills: string[]; // This is important
-//   teamSize: number;
-//   status: 'planning' | 'active' | 'completed';
-//   managerId: string;
-// }
-
-// export interface Assignment {
-//   _id: string;
-//   engineerId: string;
-//   projectId: string;
-//   allocationPercentage: number;
-//   startDate: string;
-//   endDate: string;
-//   role: 'Developer' | 'Tech Lead' | 'QA'; // Example project roles
-// }
-
-// // For API responses, etc.
-// export interface EngineerWithCapacity extends User {
-//   currentAllocation: number;
-//   availableCapacity: number;
-// }
-
-// export interface PopulatedAssignment extends Assignment {
-//   project: Project;
-//   engineer: User;
-// }
-
-
-
-
-
-
-
-
-
-
-
-
+// src/lib/types.ts
 export interface User {
   _id: string;
   name: string;
@@ -75,6 +20,7 @@ export interface Project {
   status: 'planning' | 'active' | 'completed';
   teamSize: number;
   managerId: string;
+  teamMembers: User[];
 }
 
 export interface Assignment {

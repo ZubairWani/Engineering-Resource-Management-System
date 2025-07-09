@@ -1,20 +1,24 @@
+// vite.config.ts
+
 import { defineConfig } from 'vite'
-import path from "path"                         // <-- Add this for path resolution
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
-import tsconfigPaths from 'vite-tsconfig-paths'   // <-- Add this plugin import
+import tsconfigPaths from 'vite-tsconfig-paths'
+
+// Import these two new helpers from Node.js modules
+import { fileURLToPath, URL } from "node:url";
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-    tsconfigPaths() // <-- Add this plugin to the array
+    tsconfigPaths()
   ],
-  // This section explicitly tells Vite how to resolve the '@' alias
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      // This is the modern ESM way to get the path to the 'src' directory
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
 })

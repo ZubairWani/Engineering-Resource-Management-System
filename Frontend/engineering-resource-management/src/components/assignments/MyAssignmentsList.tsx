@@ -1,4 +1,4 @@
-import { Assignment, Project } from '@/lib/types';
+import { Assignment} from '@/lib/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, Percent, Briefcase } from 'lucide-react';

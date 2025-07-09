@@ -6,7 +6,7 @@ import { Button } from '../ui/button';
 import { PlusCircle, Loader2, FolderOpen } from 'lucide-react';
 import { TeamOverviewTable } from './TeamOverviewTable';
 import { UtilizationChart } from '../analytics/UtilizationChart';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { AddEngineerForm } from '../engineers/AddEngineerForm';
 import { ProjectForm } from '../projects/ProjectForm';
 import { AssignmentForm } from '../assignments/AssignmentForm';

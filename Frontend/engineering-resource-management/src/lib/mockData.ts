@@ -9,15 +9,15 @@ const oneMonthAgo = new Date(new Date().setMonth(today.getMonth() - 1));
 
 export const mockUsers: { [email: string]: User } = {
   'engineer@mock.com': {
-    _id: 'eng123', name: 'Jane Engineer', email: 'engineer@mock.com', role: 'engineer',
+    _id: 'eng123', name: 'Jane Engineer', email: 'engineer@mock.com', role: 'ENGINEER',
     seniority: 'senior', skills: ['TypeScript', 'React', 'GraphQL'], maxCapacity: 100,
   },
   'engineer2@mock.com': { // New part-time engineer
-    _id: 'eng456', name: 'Alex Smith', email: 'engineer2@mock.com', role: 'engineer',
+    _id: 'eng456', name: 'Alex Smith', email: 'engineer2@mock.com', role: 'MANAGER',
     seniority: 'mid', skills: ['Python', 'Django', 'SQL'], maxCapacity: 50,
   },
   'manager@mock.com': {
-    _id: 'mgr789', name: 'John Manager', email: 'manager@mock.com', role: 'manager',
+    _id: 'mgr789', name: 'John Manager', email: 'manager@mock.com', role: 'MANAGER',
     seniority: 'senior', skills: ['Agile', 'Project Management', 'Budgeting'], maxCapacity: 100,
   }
 };

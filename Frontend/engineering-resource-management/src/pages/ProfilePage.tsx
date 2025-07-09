@@ -23,11 +23,10 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
-import { User, Project } from "@/lib/types"; 
+import { Project } from "@/lib/types"; 
 import {
   Loader2,
   X,
-  User as UserIcon,
   Mail,
   Briefcase,
   TrendingUp,
