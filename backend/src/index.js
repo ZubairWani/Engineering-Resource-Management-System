@@ -10,8 +10,18 @@ const swaggerDocument = require("../swagger-output.json");
 
 const app = express();
 
+const allowedOrigins = process.env.CORS_ORIGIN 
+    ? process.env.CORS_ORIGIN.split(',') 
+    : ['http://localhost:5173'];
+
 const corsOptions = {
-    origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
@@ -35,7 +45,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '..', 'views'));
 
 app.get("/", (req, res) => {
-    res.status(200).json({ status: "OK", message: "Billing and Inventory API is running." });
+    res.status(200).json({ status: "OK", message: "Backend is running." });
 });
 
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));

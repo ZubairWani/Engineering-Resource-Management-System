@@ -2,11 +2,10 @@
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
 
-const url = "http://localhost:8081/";
-// const url = "http://168.220.237.8:8000/";
+const baseURL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8081/api/";
 
 const api = axios.create({
-  baseURL: `${url}api/`
+  baseURL: baseURL,
 });
 
 // Add request interceptor to inject token
